@@ -43,8 +43,7 @@ jobs:
       - run:
           name: Build front-end
           command: |
-            # Your code here
-            exit 1
+            cd frontend && npm i && npm run build
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
@@ -59,8 +58,7 @@ jobs:
       - run:
           name: Back-end build
           command: |
-             # Your code here
-             exit 1
+             cd backend && npm i && npm run build
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
@@ -243,24 +241,24 @@ jobs:
             # your code here
       # Here's where you will add some code to rollback on failure  
 
-cleanup:
-    docker:
-      # Docker image here
-    steps:
-      # Checkout code from git
-      - run:
-          name: Get old stack workflow id
-          command: |
-            # your code here
-            export OldWorkflowID="the id here"
-            export STACKS=[] #put the list of stacks here
-      - run:
-          name: Remove old stacks and files
-          command: |
-            if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
-            then
+  cleanup:
+      docker:
+        # Docker image here
+      steps:
+        # Checkout code from git
+        - run:
+            name: Get old stack workflow id
+            command: |
               # your code here
-            fi
+              export OldWorkflowID="the id here"
+              export STACKS=[] #put the list of stacks here
+        - run:
+            name: Remove old stacks and files
+            command: |
+              if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
+              then
+                # your code here
+              fi
             
 
 workflows:
